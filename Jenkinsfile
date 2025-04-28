@@ -13,7 +13,7 @@ pipeline {
                     echo "Cleaning maven cache and target folder..."
                     rm -rf target
                     mvn clean install
-                    # mvn package
+                    mvn package
                     mvn --version
                     echo "Hello Welcome to Jenkins"
                     ls -la
@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo "Running tests..."
                 sh '''
-                   # mvn test
+                   mvn test
                    # Ensure we're using bash
                    echo "Running tests..."
                    bash -c 'a=(1 3 4 5); echo "Array elements: ${a[@]: -2}"'
