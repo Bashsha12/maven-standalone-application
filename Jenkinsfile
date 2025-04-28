@@ -11,10 +11,10 @@ pipeline {
             steps {
                 sh '''
                     echo "Cleaning maven cache and target folder..."
-                   # rm -rf target
-                    # mvn clean install
+                    rm -rf target
+                    mvn clean install
                     # mvn package
-                     mvn --version
+                    mvn --version
                     echo "Hello Welcome to Jenkins"
                     ls -la
                 '''
