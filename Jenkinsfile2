@@ -68,5 +68,23 @@ pipeline {
                 }
             }
         }
+        stage('Upload to Nexus') {
+            steps {
+                echo "========Uploading artifacts to Nexus========"
+                nexusArtifactUploader artifacts: [
+                    [artifactId: 'maven-standalone-application',
+                     classifier: '', 
+                    file: 'target/maven-standalone-application-1.0.jar', type: 'jar']
+                ], 
+                credentialsId: 'nexuslogin', 
+                groupId: 'QA', 
+                nexusUrl: '172.31.41.195:8081', 
+                nexusVersion: 'nexus3', 
+                protocol: 'http', 
+                repository: 'maven-standalone-application-repo'
+                version: '${env.BUILD}-${env.BUILD_TIMESTAMP}'
+                echo "========Upload to Nexus completed========"
+            }
+        }
     }
 }
