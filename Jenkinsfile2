@@ -41,5 +41,25 @@ pipeline {
                 sh 'mvn checkstyle:checkstyle'
             }
         }
+        stage("SonarQube") {
+            environment {
+                scannerHome = tool 'sonar7.1'
+            }
+            steps {
+                echo "========Running SonarQube analysis========"
+                withSonarQubeEnv('sonarserver') {
+                    sh '''
+                        ${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=maven-standalone-application \
+                        -Dsonar.projectName=maven-standalone-application \
+                        -Dsonar.projectVersion=1.0 \
+                        -Dsonar.sources=src/ \
+                        -Dsonar.java.binaries=target/classes \
+                        -Dsonar.junit.reportPaths=target/surefire-reports/ \
+                        -Dsonar.jacoco.reportPaths=target/jacoco.exec \
+                        -Dsonar.java.checkstyle.reportPath=target/checkstyle-result.xml \
+                        '''
+                }
+            }
+        }
     }
 }
