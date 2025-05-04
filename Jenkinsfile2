@@ -81,8 +81,8 @@ pipeline {
                 nexusUrl: '172.31.41.195:8081', 
                 nexusVersion: 'nexus3', 
                 protocol: 'http', 
-                repository: 'maven-standalone-application-repo'
-                version: '${env.BUILD}-${env.BUILD_TIMESTAMP}'
+                repository: 'maven-standalone-application-repo',
+                version: "${env.BUILD}-${env.BUILD_TIMESTAMP}"
                 echo "========Upload to Nexus completed========"
             }
         }
