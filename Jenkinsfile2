@@ -17,6 +17,7 @@ pipeline {
 
                 sh 'mvn clean install -DskipTests=true'
                 sh 'mvn package'
+                sh 'mvn clean package'
             }
             post {
                 success {
