@@ -16,6 +16,7 @@ pipeline {
                 echo "========building the application========"
 
                 sh 'mvn clean install -DskipTests=true'
+                sh 'mvn package'
             }
             post {
                 success {
