@@ -76,7 +76,7 @@ pipeline {
                 nexusArtifactUploader artifacts: [
                     [artifactId: 'maven-standalone-application',
                      classifier: '', 
-                    file: 'target/maven-standalone-application-1.0.jar', type: 'jar']
+                    file: 'target/maven-standalone-application-0.0.1-SNAPSHOT.jar', type: 'jar']
                 ], 
                 credentialsId: 'nexuslogin', 
                 groupId: 'QA', 
