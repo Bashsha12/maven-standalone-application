@@ -107,7 +107,7 @@ pipeline{
                 slackSend(
                     channel: '#devopscicd',
                     color: COLOR_MAP[result],
-                    message: "${emoji} *${result}*: Job `${env.JOB_NAME}` build #${env.BUILD_NUMBER} \nCheck console: ${env.BUILD_NAME}"
+                    message: "${emoji} *${result}*: Job `${env.JOB_NAME}` build #${env.BUILD_NUMBER} \nCheck console: ${env.BUILD_URL}"
                 )
             }
         }
