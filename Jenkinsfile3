@@ -9,8 +9,8 @@ pipeline{
        label 'master' 
     }
     tools {
-        maven 'MAVEN'
-        jdk 'JDK21'
+        maven 'Maven'
+        jdk 'Java21'
     }
     environment{
         sonarqube_server = 'Sonar'          
@@ -123,5 +123,6 @@ pipeline{
             }
         }
     }
+
 
 }
