@@ -48,11 +48,7 @@ pipeline{
                 sh 'mvn verify -DskipUnitTests=true'
             }
             }
-            stage("Regression Tets"){
-                steps{
-                    sh'echo "Running Regression Tests..."'
-                }
-                }
+            
                 /*
         stage("SonarQube Analysis"){
             steps{
