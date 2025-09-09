@@ -94,7 +94,7 @@ pipeline{
                     sh "docker build --build-arg JAR_FILE=${jarFile} -t ${imageTag} ${WORKSPACE}"
                     sh 'echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin'
                     sh "docker push ${imageTag}"
-                    
+                    sh "echo Docker image pushed: ${imageTag}"
                     }
                 }
             }
