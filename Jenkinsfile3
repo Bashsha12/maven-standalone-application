@@ -94,11 +94,14 @@ pipeline{
                 unstash 'app-jar'
                 script {
                     def imageTag = "${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
+                    def jarFile = sh(script: "ls target/*.jar | head -n 1", returnStdout: true).trim()
+                    withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CRED}", usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
                     sh """
-                        docker build -t ${imageTag} .
+                        docker build --build-arg JAR_FILE=${jarFile} -t ${imageTag} ${WORKSPACE}
                         echo $DOCKERHUB_CRED | docker login -u $DOCKERHUB_CRED --password-stdin
                         docker push ${imageTag}
                     """
+                    }
                 }
             }
         }
