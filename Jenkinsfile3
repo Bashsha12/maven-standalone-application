@@ -96,11 +96,10 @@ pipeline{
                     def imageTag = "${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
                     def jarFile = sh(script: "ls target/*.jar | head -n 1", returnStdout: true).trim()
                     withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CRED}", usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
-                    sh """
-                        docker build --build-arg JAR_FILE=${jarFile} -t ${imageTag} ${WORKSPACE}
-                        echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
-                        docker push ${imageTag}
-                    """
+                    sh "docker build --build-arg JAR_FILE=${jarFile} -t ${imageTag} ${WORKSPACE}"
+                    sh "echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin"
+                    sh "docker push ${imageTag}"
+                    
                     }
                 }
             }
