@@ -98,7 +98,7 @@ pipeline{
                     withCredentials([usernamePassword(credentialsId: "${DOCKERHUB_CRED}", usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_PASS')]) {
                     sh """
                         docker build --build-arg JAR_FILE=${jarFile} -t ${imageTag} ${WORKSPACE}
-                        echo $DOCKERHUB_CRED | docker login -u $DOCKERHUB_CRED --password-stdin
+                        echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
                         docker push ${imageTag}
                     """
                     }
