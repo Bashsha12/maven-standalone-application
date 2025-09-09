@@ -1,4 +1,4 @@
-FROM amazoncorretto:11-al2023-jdk
+FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
 COPY target/maven-standalone-application*.jar maven-standalone-application.jar 
 CMD ["java","-jar","maven-standalone-application.jar"]
