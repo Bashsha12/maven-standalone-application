@@ -22,11 +22,6 @@ pipeline{
         ServiceName= "maven-standalone-service"
     }
     stages{
-        stage("Clean Workspace") {
-            steps {
-                deleteDir()
-            }
-        }
         stage("Checkout"){
             steps{
                 git url: 'https://github.com/Bashsha12/maven-standalone-application.git'
