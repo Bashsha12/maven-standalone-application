@@ -33,23 +33,36 @@ pipeline{
                 stash includes: 'target/*.jar', name: 'app-jar'
             }
         }
-        stage("Unit test"){
-            steps{
-                sh 'mvn test'
+        stage("Testing stage"){
+            parallel{
+                stage("Unit Test"){
+                    steps{
+                        sh 'mvn test'
+                    }
+                }
+                stage("Integration Test"){
+                    steps{
+                        sh 'mvn verify -DskipUnitTests=true'
+                    }
+                }
+                stage("Checkstyle Report"){
+                    steps{
+                        sh 'mvn checkstyle:checkstyle'
+                        junit 'target/surefire-reports/*.xml'
+                        publishHTML(target: [
+                            reportDir: 'target/site',
+                            reportFiles: 'checkstyle.html',
+                            reportName: 'Checkstyle Report'
+                        ])
+                    }
+                }
             }
         }
-        stage("Checkstyle Report"){
+         stage("Code Coverage"){
             steps{
-                sh 'mvn checkstyle:checkstyle'
+                sh 'mvn jacoco:report'
             }
         }
-        stage("Integration Test"){
-            steps{
-                sh 'mvn verify -DskipUnitTests=true'
-            }
-            }
-            
-                
         stage("SonarQube Analysis"){
             steps{
                 script {
@@ -84,6 +97,7 @@ pipeline{
                 }
             }
         }
+        /*
         stage("Build and Push Docker Image"){
             steps{
                 unstash 'app-jar'
@@ -101,13 +115,10 @@ pipeline{
         stage("Deploy to AWS ECS"){
             steps{
                 script {
-                    def imageTag = "${DOCKER_REGISTRY}/${DOCKER_IMAGE_NAME}:${env.BUILD_NUMBER}"
-                    sh """
-                        aws ecs update-service --cluster ${ClusterName} --service ${ServiceName} --force-new-deployment --region ${AWSRegion}
-                    """
+                    sh "aws ecs update-service --cluster ${ClusterName} --service ${ServiceName} --force-new-deployment --region ${AWSRegion}"
                 }
             }
-        }
+        }*/
     }
     post {
         always {
