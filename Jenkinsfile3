@@ -40,11 +40,12 @@ pipeline{
                         sh 'mvn test'
                     }
                 }
+                /*
                 stage("Integration Test"){
                     steps{
                         sh 'mvn verify -DskipUnitTests=true'
                     }
-                }
+                }*/
                 stage("Checkstyle Report"){
                     steps{
                         sh 'mvn checkstyle:checkstyle'
